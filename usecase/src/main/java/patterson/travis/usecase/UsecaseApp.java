@@ -18,10 +18,10 @@ import java.util.List;
 public class UsecaseApp {
 
     @Autowired
-    JobService jobService;
+    Employees employees;
 
     @Autowired
-    Employees employees;
+    JobService jobService;
 
     @RequestMapping("/")
     public EmployeesAndJobs employeesAndJobs() {

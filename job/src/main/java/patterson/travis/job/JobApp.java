@@ -1,5 +1,6 @@
 package patterson.travis.job;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -16,6 +17,9 @@ import static java.util.Arrays.asList;
 @SpringBootApplication
 public class JobApp {
 
+    @Value("${server.port}")
+    int port;
+
     private static final String[] JOBS = {
             "Developer",
             "QA",
@@ -25,7 +29,11 @@ public class JobApp {
 
     @RequestMapping("/")
     public List<String> jobs() {
-        return asList(JOBS);
+        List<String> jobs = new ArrayList<>();
+        jobs.add(Integer.toString(port));
+        jobs.addAll(asList(JOBS));
+
+        return jobs;
     }
 
     public static void main(String[] args) {

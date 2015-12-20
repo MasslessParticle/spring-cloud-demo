@@ -1,14 +1,13 @@
 package patterson.travis.employee;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 import static java.util.Arrays.*;
 
@@ -16,6 +15,9 @@ import static java.util.Arrays.*;
 @EnableDiscoveryClient
 @SpringBootApplication
 public class EmployeeApp {
+
+    @Value("${server.port}")
+    int port;
 
     private static final String[] EMPLOYEES = {
             "Tony",
@@ -34,7 +36,11 @@ public class EmployeeApp {
 
     @RequestMapping("/")
     public List<String> employees() {
-        return asList(EMPLOYEES);
+        List<String> employees = new ArrayList<>();
+        employees.add(Integer.toString(port));
+        employees.addAll(asList(EMPLOYEES));
+
+        return employees;
     }
 
     public static void main(String[] args) {
